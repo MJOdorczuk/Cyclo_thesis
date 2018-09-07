@@ -12,6 +12,16 @@ namespace Cyclo2
 
         public Variable(string name) => this.name = name;
 
-        public override List<string> ContainedVariables => new List<string> { name };
+        public override List<string> GetContainedVariables()
+        {
+            return new List<string> { name };
+        }
+
+        public override Node Simplify(Dictionary<string, double> evaluations)
+        {
+            double value = new double();
+            if (evaluations.TryGetValue(name, out value)) return new Value(value);
+            else return this;
+        }
     }
 }

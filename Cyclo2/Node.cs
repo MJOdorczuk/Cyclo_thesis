@@ -8,7 +8,8 @@ namespace Cyclo2
 {
     abstract class Node
     {
-        abstract public List<string> ContainedVariables { get; }
+        public abstract List<string> GetContainedVariables();
         abstract public Node Simplify(Dictionary<String, Double> evaluations);
+        public virtual Value TryToGetAsValue() { return null; }
     }
 }
