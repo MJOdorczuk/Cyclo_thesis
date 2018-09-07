@@ -12,10 +12,13 @@ namespace Cyclo2
 
         public Variable(string name) => this.name = name;
 
-        public override List<string> GetContainedVariables()
-        {
-            return new List<string> { name };
-        }
+        public override List<string> ContainedVariables => new List<string> { name };
+
+        public override string Signature => "Variable";
+
+        public override string Display => name;
+
+        public override Node ParseWith(Func<Node, Node> parser) => parser(this);
 
         public override Node Simplify(Dictionary<string, double> evaluations)
         {

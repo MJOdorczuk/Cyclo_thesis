@@ -10,7 +10,18 @@ namespace Cyclo2
     {
         private Node negated;
         public Negation(Node negated) => this.negated = negated;
-        public override List<string> GetContainedVariables() => negated.GetContainedVariables();
+
+        public override string Signature => " - ";
+
+        public override List<string> ContainedVariables => negated.ContainedVariables;
+
+        public override string Display => "( - " + negated.Display + " )";
+
+        public override Node ParseWith(Func<Node, Node> parser)
+        {
+            negated = parser(negated);
+            return parser(this);
+        }
 
         public override Node Simplify(Dictionary<string, double> evaluations)
         {
