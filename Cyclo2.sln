@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclo2", "Cyclo2\Cyclo2.csproj", "{ACE211DF-DDC7-41A2-99D2-928D8C6951B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclo", "..\Cyclo\Cyclo\Cyclo.csproj", "{BE3C3804-D6EE-4DED-B899-9125B19A1695}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{ACE211DF-DDC7-41A2-99D2-928D8C6951B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACE211DF-DDC7-41A2-99D2-928D8C6951B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACE211DF-DDC7-41A2-99D2-928D8C6951B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3C3804-D6EE-4DED-B899-9125B19A1695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3C3804-D6EE-4DED-B899-9125B19A1695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3C3804-D6EE-4DED-B899-9125B19A1695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3C3804-D6EE-4DED-B899-9125B19A1695}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
