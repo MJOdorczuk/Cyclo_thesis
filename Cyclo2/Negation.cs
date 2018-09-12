@@ -15,5 +15,7 @@ namespace Cyclo2
         public override string Signature => " - ";
 
         public override string Display => "( - " + Under.Display + " )";
+
+        public override Node Clone(Node under) => new Negation(under);
     }
 }

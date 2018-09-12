@@ -14,5 +14,11 @@ namespace Cyclo2
         }
 
         public override string Signature => " * ";
+
+        public override bool IsCommutative => true;
+
+        public override bool IsAssociative => true;
+
+        public override Node Clone(Node left, Node right) => new Multiplication(left, right);
     }
 }

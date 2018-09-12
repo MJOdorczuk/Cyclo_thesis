@@ -35,5 +35,7 @@ namespace Cyclo2
         }
 
         public override UniNode TryToGetAsUniNode => this;
+
+        public abstract Node Clone(Node under);
     }
 }

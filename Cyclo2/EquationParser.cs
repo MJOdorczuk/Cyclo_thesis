@@ -83,5 +83,41 @@ namespace Cyclo2
             }
             return node;
         }
+        private Node BasicSimplificationParser(Node node)
+        {
+            BiNode bin = node.TryToGetAsBiNode;
+            if(bin != null)
+            {
+                Value valLeft = bin.Left.TryToGetAsValue;
+                Value valRight = bin.Right.TryToGetAsValue;
+                if (valLeft != null && valRight != null)
+                {
+                    return new Value(bin.Operation(valLeft.GetValue, valRight.GetValue));
+                }
+                else if (valLeft != null) return node;
+                BiNode binLeft = bin.Left.TryToGetAsBiNode;
+                if (binLeft != null)
+                {
+                    if(bin.Signature == binLeft.Signature && bin.IsAssociative)
+                    {
+                        return BasicSimplificationParser(bin.Clone(binLeft.Left, bin.Clone(binLeft.Right, bin.Right)));
+                    }
+                }
+                else
+                {
+                    Node right = BasicSimplificationParser(bin.Right);
+                    BiNode binRight = right.TryToGetAsBiNode;
+                    if(binRight != null)
+                    {
+                        Value val = binRight.Left.TryToGetAsValue;
+                        if(val != null && bin.Signature == binRight.Signature)
+                        {
+                            return bin.Clone(val, bin.Clone(bin.Left, binRight.Right));
+                        }
+                    }
+                }
+            }
+            return node;
+        }
     }
 }

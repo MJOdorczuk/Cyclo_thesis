@@ -12,7 +12,9 @@ namespace Cyclo2
         {
             this.operation = (x, y) => x / y;
         }
-
         public override string Signature => " / ";
+        public override Node Clone(Node left, Node right) => new Division(left, right);
+        public override bool IsAssociative => true;
+        public override bool IsCommutative => false;
     }
 }
