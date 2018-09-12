@@ -22,7 +22,7 @@ namespace Cyclo2
 
         public override Node Simplify(Dictionary<string, double> evaluations) => this;
 
-        public override Value TryToGetAsValue() => this;
+        public override Value TryToGetAsValue => this;
 
         public override Node ParseWith(Func<Node, Node> parser) => parser(this);
     }

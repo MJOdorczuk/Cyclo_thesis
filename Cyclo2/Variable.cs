@@ -26,5 +26,7 @@ namespace Cyclo2
             if (evaluations.TryGetValue(name, out value)) return new Value(value);
             else return this;
         }
+
+        public override Variable TryToGetAsVariable => this;
     }
 }

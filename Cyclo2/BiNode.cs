@@ -38,8 +38,8 @@ namespace Cyclo2
         {
             Left = Left.Simplify(evaluations);
             Right = Right.Simplify(evaluations);
-            Value leftValue = Left.TryToGetAsValue();
-            Value rightValue = Right.TryToGetAsValue();
+            Value leftValue = Left.TryToGetAsValue;
+            Value rightValue = Right.TryToGetAsValue;
             if (leftValue == null || rightValue == null) return this;
             else return new Value(operation(leftValue.GetValue,rightValue.GetValue));
         }
@@ -49,5 +49,7 @@ namespace Cyclo2
             Right = Right.ParseWith(parser);
             return parser(this);
         }
+
+        public override BiNode TryToGetAsBiNode => this;
     }
 }
