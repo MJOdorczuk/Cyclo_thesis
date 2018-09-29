@@ -15,8 +15,10 @@ namespace Cyclo2
         public virtual Variable TryToGetAsVariable => null;
         public virtual UniNode TryToGetAsUniNode => null;
         public virtual BiNode TryToGetAsBiNode => null;
+        public virtual MultiNode TryToGetAsMultiNode => null;
         public abstract Node ParseWith(Func<Node, Node> parser);
         public abstract string Signature { get; }
+
         public abstract string Display { get; }
     }
 }

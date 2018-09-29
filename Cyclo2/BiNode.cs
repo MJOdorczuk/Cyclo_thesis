@@ -20,6 +20,7 @@ namespace Cyclo2
         public Node Left { get => left; set => left = value; }
         public Node Right { get => right; set => right = value; }
         public Func<double, double, double> Operation { get => operation; }
+
         public override List<string> ContainedVariables
         {
             get
@@ -30,7 +31,9 @@ namespace Cyclo2
                 return ret.Distinct().ToList();
             }
         }
+
         public override string Display => "( " + Left.Display + this.Signature + Right.Display + " )";
+
         public override Node Simplify(Dictionary<string, double> evaluations)
         {
             Left = Left.Simplify(evaluations);
@@ -42,13 +45,14 @@ namespace Cyclo2
         }
         public override Node ParseWith(Func<Node, Node> parser)
         {
-            Left = Left.ParseWith(parser);
-            Right = Right.ParseWith(parser);
+            this.Left = Left.ParseWith(parser);
+            this.Right = Right.ParseWith(parser);
             return parser(this);
         }
         public override BiNode TryToGetAsBiNode => this;
         public abstract Node Clone(Node left, Node right);
         public abstract bool IsCommutative { get; }
         public abstract bool IsAssociative { get; }
+        public abstract MultiNode ToMultiNode { get; }
     }
 }

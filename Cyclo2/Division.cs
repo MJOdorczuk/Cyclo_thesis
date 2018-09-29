@@ -14,7 +14,9 @@ namespace Cyclo2
         }
         public override string Signature => " / ";
         public override Node Clone(Node left, Node right) => new Division(left, right);
-        public override bool IsAssociative => true;
+        public override bool IsAssociative => false;
         public override bool IsCommutative => false;
+
+        public override MultiNode ToMultiNode => new MultiMultiplication(new List<Node>() {Left, new Power(Right, new Value(-1)) });
     }
 }

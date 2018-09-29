@@ -49,13 +49,17 @@
     <Compile Include="Cycloid.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="EquationParser.cs" />
+    <Compile Include="EquationReader.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MultiMultiplication.cs" />
+    <Compile Include="MultiNode.cs" />
     <Compile Include="Multiplication.cs" />
+    <Compile Include="MultiSum.cs" />
     <Compile Include="Negation.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Power.cs" />

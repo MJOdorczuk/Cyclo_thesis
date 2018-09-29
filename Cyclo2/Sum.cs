@@ -19,6 +19,8 @@ namespace Cyclo2
 
         public override bool IsAssociative => true;
 
+        public override MultiNode ToMultiNode => new MultiSum(new List<Node>() { Left, Right });
+
         public override Node Clone(Node left, Node right) => new Sum(left, right);
     }
 }

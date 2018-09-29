@@ -19,6 +19,8 @@ namespace Cyclo2
 
         public override bool IsAssociative => false;
 
+        public override MultiNode ToMultiNode => throw new NotImplementedException();
+
         public override Node Clone(Node left, Node right) => new Power(left, right);
     }
 }
