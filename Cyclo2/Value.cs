@@ -25,5 +25,15 @@ namespace Cyclo2
         public override Value TryToGetAsValue => this;
 
         public override Node ParseWith(Func<Node, Node> parser) => parser(this);
+
+        public override bool Compare(Node node)
+        {
+            Value val = node.TryToGetAsValue;
+            if (val != null)
+            {
+                return this.value == val.value;
+            }
+            else return false;
+        }
     }
 }

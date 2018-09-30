@@ -18,7 +18,7 @@ namespace Cyclo2
         public virtual MultiNode TryToGetAsMultiNode => null;
         public abstract Node ParseWith(Func<Node, Node> parser);
         public abstract string Signature { get; }
-
         public abstract string Display { get; }
+        public abstract bool Compare(Node node);
     }
 }

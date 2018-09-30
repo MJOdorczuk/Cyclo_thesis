@@ -51,6 +51,20 @@ namespace Cyclo2
         }
         public override BiNode TryToGetAsBiNode => this;
         public abstract Node Clone(Node left, Node right);
+
+        public override bool Compare(Node node)
+        {
+            BiNode bin = node.TryToGetAsBiNode;
+            if(bin != null)
+            {
+                if(bin.Signature == this.Signature)
+                {
+                    return this.Left.Compare(bin.Left) && this.Right.Compare(bin.Right);
+                }
+            }
+            return false;
+        }
+
         public abstract bool IsCommutative { get; }
         public abstract bool IsAssociative { get; }
         public abstract MultiNode ToMultiNode { get; }

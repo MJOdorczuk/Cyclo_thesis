@@ -93,6 +93,47 @@ namespace Cyclo2
         public abstract bool IsCommutative { get; }
 
         public abstract MultiNode Clone(List<Node> elements);
+
+        public override bool Compare(Node node)
+        {
+            MultiNode mul = node.TryToGetAsMultiNode;
+            bool ret = true;
+            if (mul != null)
+            {
+                if (mul.Signature == this.Signature)
+                {
+                    if (!mul.IsCommutative)
+                    {
+                        if (mul.Elements.Count == this.Elements.Count)
+                        {
+                            for (int i = 0; i < mul.Elements.Count; i++)
+                            {
+                                ret = ret && (mul.Elements[i].Compare(this.Elements[i]));
+                            }
+                            return ret;
+                        }
+                        else return false;
+                    }
+                    else
+                    {
+                        List<Node> elements_b = new List<Node>(mul.Elements);
+                        foreach (Node element_a in this.Elements)
+                        {
+                            Node element_b = elements_b.Find((x) => element_a.Compare(x));
+                            if (element_b == null) return false;
+                            else
+                            {
+                                elements_b.Remove(element_b);
+                            }
+                        }
+                        if (elements_b.Count == 0) return true;
+                        else return false;
+                    }
+                }
+            }
+            return false;
+        }
+
         public abstract BiNode ToBiNode { get; }
     }
 }

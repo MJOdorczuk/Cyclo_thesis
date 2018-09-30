@@ -20,7 +20,8 @@ namespace Cyclo2
                 (x) => BasicSimplificationParser(x),
                 (x) => BasicDivisionParser(x),
                 (x) => BasicPowerParser(x),
-                (x) => BasicMultiNodeParser(x)
+                (x) => BasicMultiNodeParser(x),
+                (x) => BasicMultiMultiplicationParser(x)
             };
 
         }
@@ -89,18 +90,18 @@ namespace Cyclo2
                 {
                     BiNode sumLeft = bin.Left.TryToGetAsBiNode;
                     BiNode sumRight = bin.Right.TryToGetAsBiNode;
-                    if(sumLeft != null)
+                    if (sumRight != null)
+                    {
+                        if (sumRight.Signature == new Sum(null, null).Signature)
+                        {
+                            return new Sum(BasicMultiplicationParser(new Multiplication(bin.Left, sumRight.Left)), BasicMultiplicationParser(new Multiplication(bin.Left, sumRight.Right)));
+                        }
+                    }
+                    if (sumLeft != null)
                     {
                         if(sumLeft.Signature == new Sum(null,null).Signature)
                         {
                             return new Sum(BasicMultiplicationParser(new Multiplication(sumLeft.Left, bin.Right)), BasicMultiplicationParser(new Multiplication(sumLeft.Right, bin.Right)));
-                        }
-                    }
-                    else if(sumRight != null)
-                    {
-                        if(sumRight.Signature == new Sum(null,null).Signature)
-                        {
-                            return new Sum(BasicMultiplicationParser(new Multiplication(bin.Left, sumRight.Left)), BasicMultiplicationParser(new Multiplication(bin.Left, sumRight.Right)));
                         }
                     }
                 }
@@ -241,6 +242,102 @@ namespace Cyclo2
                 }
             }
             return node;
+        }
+        /*
+         * (5 * 4 * a * 3) => (60 * a)
+         */
+         private Node BasicMultiMultiplicationParser(Node node)
+        {
+            MultiNode mul = node.TryToGetAsMultiNode;
+            if(mul != null)
+            {
+                if(mul.Signature == new MultiMultiplication(null).Signature)
+                {
+                    List<Node> elements = new List<Node>(mul.Elements);
+                    double multiplier = 1;
+                    foreach(Node element in elements)
+                    {
+                        Value val = element.TryToGetAsValue;
+                        if(val != null)
+                        {
+                            multiplier *= val.GetValue;
+                            elements.Remove(element);
+                        }
+                    }
+                    if (multiplier == 0) return new Value(0);
+                    else if (multiplier != 1) elements.Add(new Value(multiplier));
+                    return new MultiMultiplication(elements);
+                }
+            }
+            return node;
+        }
+        /*
+         * ((2 * a) + (3 * a) + (4 * a) + b) => ((9 * a) + b) (for all values and any number of elements)
+         */
+         private Node BasicMultiplicatorComposeParser(Node node)
+        {
+            MultiNode mul = node.TryToGetAsMultiNode;
+            if (mul.Signature == new MultiSum(null).Signature)
+            {
+                List<Node> components = new List<Node>();
+                List<Node> elements = new List<Node>(mul.Elements);
+                foreach (Node element in elements)
+                {
+                    elements.Remove(element);
+                    Value val = element.TryToGetAsValue;
+                    if (val != null)
+                    {
+                        components.Add(element);
+                    }
+                    else
+                    {
+                        MultiNode submul = element.TryToGetAsMultiNode;
+                        double multiplier = 1;
+                        Node value;
+                        if (submul != null)
+                        {
+                            List<Node> submul_elements = new List<Node>(submul.Elements);
+                            if (submul.Signature == new MultiMultiplication(null).Signature)
+                            {
+                                value = submul_elements.Find((x) => x.TryToGetAsValue != null);
+                                if (value != null)
+                                {
+                                    submul_elements.Remove(value);
+                                    multiplier = value.TryToGetAsValue.GetValue;
+                                    submul = new MultiMultiplication(submul_elements);
+                                }
+                            }
+                        }
+                        foreach (Node relement in elements)
+                        {
+                            MultiNode rsubmul = relement.TryToGetAsMultiNode;
+                            double mult = 1;
+                            if (rsubmul != null)
+                            {
+                                List<Node> rsubmul_elements = new List<Node>(rsubmul.Elements);
+                                if (rsubmul.Signature == new MultiMultiplication(null).Signature)
+                                {
+                                    value = rsubmul_elements.Find((x) => x.TryToGetAsValue != null);
+                                    if (value != null)
+                                    {
+                                        rsubmul_elements.Remove(value);
+                                        mult = value.TryToGetAsValue.GetValue;
+                                        rsubmul = new MultiMultiplication(rsubmul_elements);
+                                    }
+                                }
+                            }
+                            if (submul.Compare(rsubmul))
+                            {
+                                multiplier += mult;
+                                elements.Remove(relement);
+                            }
+                        }
+                        if (multiplier != 1) submul.Elements.Add(new Value(multiplier));
+                        components.Add(submul);
+                    }
+                }
+                return node;
+            }
         }
         // Not complete
         /*private Func<Node,Node> BasicSeparationParserCreator(string name)

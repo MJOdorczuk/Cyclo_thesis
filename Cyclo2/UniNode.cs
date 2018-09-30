@@ -37,5 +37,18 @@ namespace Cyclo2
         public override UniNode TryToGetAsUniNode => this;
 
         public abstract Node Clone(Node under);
+
+        public override bool Compare(Node node)
+        {
+            UniNode uni = node.TryToGetAsUniNode;
+            if(uni != null)
+            {
+                if(uni.Signature == this.Signature)
+                {
+                    return this.under.Compare(uni.under);
+                }
+            }
+            return false;
+        }
     }
 }

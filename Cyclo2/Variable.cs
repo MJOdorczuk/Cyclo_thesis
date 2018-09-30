@@ -27,6 +27,16 @@ namespace Cyclo2
             else return this;
         }
 
+        public override bool Compare(Node node)
+        {
+            Variable var = node.TryToGetAsVariable;
+            if (var != null)
+            {
+                return this.name == var.name;
+            }
+            else return false;
+        }
+
         public override Variable TryToGetAsVariable => this;
     }
 }
