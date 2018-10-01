@@ -26,10 +26,12 @@ namespace Cyclo2
             Node node1 = new Multiplication(new Sum(new Variable("a"), new Variable("b")), new Sum(new Variable("c"), new Variable("d"))); //((a+b)*(c+d))
             Node node2 = new Multiplication(new Sum(new Variable("c"), new Variable("c")), new Variable("c")); //((c+c)*c)
             Node node3 = new Sum(new Value(2), new Sum(new Variable("e"), new Variable("f"))); //(2+(e+f))
-            Node node4 = new Multiplication(new Multiplication(new Multiplication(new Value(3), new Variable("a")), new Multiplication(new Variable("a"), new Variable("a"))),
-                new Multiplication(new Multiplication(new Value(5), new Variable("a")), new Multiplication(new Value(4), new Variable("a")))); //(((3*a)*(a*a))*((5*a)*(4*a)))
+            Node node4 = new Multiplication(new Multiplication(new Multiplication(new Value(3), new Variable("b")), new Multiplication(new Variable("a"), new Variable("a"))),
+                new Multiplication(new Multiplication(new Value(5), new Variable("b")), new Multiplication(new Value(4), new Variable("a")))); //(((3*a)*(a*a))*((5*a)*(4*a)))
+            Node node5 = new Sum(new Multiplication(new Value(2), new Variable("a")), new Multiplication(new Value(5), new Variable("a")));
+            Node node6 = new Sum(new Multiplication(new Variable("a"), new Variable("b")), new Multiplication(new Variable("a"), new Value(10)));
             //TestEquation = new Multiplication(new Sum(node1, node2), node3);
-            TestEquation = new Multiplication(node4, new Value(7));
+            TestEquation = new Multiplication(node5, node6);
             TestEquationDisplay.Text = TestEquation.Display + "\n";
         }
 
@@ -47,7 +49,7 @@ namespace Cyclo2
                 { "x", 5 }
             };
             TestEquationDisplay.Text += TestEquation.Simplify(tempdic).Display + "\n";
-            TestEquationDisplay.Text += new EquationParser(null, null).Parse(TestEquation).Display + "\n";
+            TestEquationDisplay.Text += new EquationConverter(null, null).Convert(TestEquation).Display + "\n";
         }
     }
 }

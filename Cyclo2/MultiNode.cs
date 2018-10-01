@@ -45,15 +45,15 @@ namespace Cyclo2
 
         public override MultiNode TryToGetAsMultiNode => this;
 
-        public override Node ParseWith(Func<Node, Node> parser)
+        public override Node ConvertWith(Func<Node, Node> converter)
         {
-            List<Node> parsed = new List<Node>();
+            List<Node> converted = new List<Node>();
             foreach(Node element in elements)
             {
-                parsed.Add(element.ParseWith(parser));
+                converted.Add(element.ConvertWith(converter));
             }
-            elements = parsed;
-            return parser(this);
+            elements = converted;
+            return converter(this);
         }
 
         public override Node Simplify(Dictionary<string, double> evaluations)

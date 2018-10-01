@@ -16,7 +16,8 @@ namespace Cyclo2
         public virtual UniNode TryToGetAsUniNode => null;
         public virtual BiNode TryToGetAsBiNode => null;
         public virtual MultiNode TryToGetAsMultiNode => null;
-        public abstract Node ParseWith(Func<Node, Node> parser);
+        public virtual Series TryToGetAsSeries => null;
+        public abstract Node ConvertWith(Func<Node, Node> converter);
         public abstract string Signature { get; }
         public abstract string Display { get; }
         public abstract bool Compare(Node node);

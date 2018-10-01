@@ -43,11 +43,11 @@ namespace Cyclo2
             if (leftValue == null || rightValue == null) return this;
             else return new Value(operation(leftValue.GetValue,rightValue.GetValue));
         }
-        public override Node ParseWith(Func<Node, Node> parser)
+        public override Node ConvertWith(Func<Node, Node> converter)
         {
-            this.Left = Left.ParseWith(parser);
-            this.Right = Right.ParseWith(parser);
-            return parser(this);
+            this.Left = Left.ConvertWith(converter);
+            this.Right = Right.ConvertWith(converter);
+            return converter(this);
         }
         public override BiNode TryToGetAsBiNode => this;
         public abstract Node Clone(Node left, Node right);

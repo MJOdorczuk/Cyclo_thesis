@@ -18,7 +18,7 @@ namespace Cyclo2
 
         public override string Display => name;
 
-        public override Node ParseWith(Func<Node, Node> parser) => parser(this);
+        public override Node ConvertWith(Func<Node, Node> converter) => converter(this);
 
         public override Node Simplify(Dictionary<string, double> evaluations)
         {

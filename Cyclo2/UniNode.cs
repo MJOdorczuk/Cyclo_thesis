@@ -28,9 +28,9 @@ namespace Cyclo2
             else return new Value(operation(underVal.GetValue));
         }
 
-        public override Node ParseWith(Func<Node, Node> parser)
+        public override Node ConvertWith(Func<Node, Node> parser)
         {
-            under = under.ParseWith(parser);
+            under = under.ConvertWith(parser);
             return parser(this);
         }
 
