@@ -8,9 +8,9 @@ namespace Cyclo2
 {
     class Equation
     {
-        private Node right, left;
+        private Node left, right;
 
-        public Equation(Node right, Node left)
+        public Equation(Node left, Node right)
         {
             Right = right;
             Left = left;
@@ -20,5 +20,6 @@ namespace Cyclo2
         public Node Left { get => left; set => left = value; }
 
         public List<string> ContainedVariables => new Sum(Left, Right).ContainedVariables;
+        public string Signature => "=";
     }
 }

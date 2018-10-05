@@ -24,6 +24,7 @@ namespace Cyclo2
                 (x) => BasicSimplificationConverter(x),
                 (x) => BasicDivisionConverter(x),
                 (x) => BasicPowerConverter(x),
+                (x) => BasicSeriesConverter(x),
                 (x) => BasicMultiNodeConverter(x),
                 (x) => BasicMultiMultiplicationConverter(x),
                 (x) => BasicMultiplicatorComposeConverter(x)
@@ -205,6 +206,18 @@ namespace Cyclo2
                 }
             }
             return node;
+        }
+        /*
+         * (#@<i:j>a) => (a(i) @@ a(i + 1) @@ ... @@ a(j))
+         */
+        private Node BasicSeriesConverter(Node node)
+        {
+            Series ser = node.TryToGetAsSeries;
+            if (ser != null)
+            {
+                return ser.Iterate;
+            }
+            else return node;
         }
         /*
          * (a @ (b @ c)) => (a @@ b @@ c)

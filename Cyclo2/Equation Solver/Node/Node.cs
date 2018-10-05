@@ -21,5 +21,6 @@ namespace Cyclo2
         public abstract string Signature { get; }
         public abstract string Display { get; }
         public abstract bool Compare(Node node);
+        
     }
 }
